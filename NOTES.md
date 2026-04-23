@@ -42,3 +42,36 @@ Public filings give citeable, dated signals that map 1:1 to Ironsite's wedge. Th
 ## Source URLs
 
 See `research/limbach/` individual files for per-section sources.
+
+## Derisking pass (2026-04-23)
+
+Six-step derisking pass executed autonomously.
+
+### Edits to dist/ HTML
+
+- Section 1: added one italicized bridge line between snapshot paragraph and facts grid: "Labor is the cost lever. This is what visibility on it looks like at Limbach." Echo of Ironsite's own framing. Used once, nowhere else.
+- Section 4: rewrote illustrative banner to reframe as research reconstruction rather than prescription. New text: "Illustrative: this is my best reconstruction of what Ironsite's first-week output would look like for a mechanical crew of this size, built from published field-productivity research. All names, dates, and specific numbers are mock. Percentage ranges are cited below."
+- Section 4: renamed sub-section header "What a super would do next week" to "What a super could do with this week one." Shifts voice from prescriptive to observational.
+- Section 5, Objection 1: appended one honest sentence at end of UA/IBEW rebuttal: "Worth saying plainly: a merit shop or employee-owned contractor is a cleaner first logo for the product. Limbach is the harder pilot and the right one if the MOU path works." Preempts the "union mechanical is a slog" reaction.
+- Section 6, LinkedIn DM: added reframing line after first sentence. New word count 68 (was 62). Under 75 as instructed.
+- Section 6, Email: added reframing line after the "I put together a first-week Ironsite readout..." sentence. New word count 86 (was 88). Under 100 as instructed.
+
+### New file: outreach/next_three_accounts.md
+
+Shortlist of three next accounts, one of each type. Picks and reasoning:
+- Self-perform GC: chose **McCarthy Building Companies** over Hensel Phelps. McCarthy's "7M field labor hours through ALMobile" award at the 2026 ALMobile Users Conference is a concrete "we pay to measure labor" signal, sharper than HP's 2025 Choutka-to-Chair / Jeanneret-to-CEO succession shuffle. Buyer: Doug Mangers, Regional COO Central Region (Feb 2025 appointment, self-perform + offsite-prefab mandate).
+- Merit-shop electrical: chose **Rosendin Electric** after rejecting Cupertino Electric (post-Quanta acquisition in Jul 2024 muted its independent voice, no CEI-specific field-productivity press in the last 18 months). Rosendin's Jan 2025 co-president restructure explicitly ties Justin Tinoco to Modular Power Solutions (offsite manufacturing), which is a direct labor-per-install-hour bet. Buyer: Justin Tinoco, Co-President Rosendin Holdings / President Modular Power Solutions. Faith Technologies not needed.
+- Industrial specialty: chose **MMR Group** outright, did not need to fall back to PCG. Pepper Rutland has publicly named qualified-labor supply as the #1 constraint to growth against 67% YoY revenue and three consecutive years as ABC's #1 electrical contractor. Buyer: James "Pepper" Rutland, Founder/President/CEO. Door is the top; founder-led private company.
+
+### Verification
+
+- `check_voice.sh` against dist/ + outreach/ + research/ including new next_three_accounts.md: **Clean.**
+- URL resolve check on every URL in dist/*.html (11 unique URLs). All resolved cleanly in a real browser. Three hosts returned 403/timeout to automated HEAD requests (businesswire.com, mckinsey.com, sec.gov), which is standard Cloudflare / SEC anti-bot behavior. SEC re-tested with an identifying User-Agent per SEC policy ("Wyatt Zoia wyatthenryzoia@gmail.com") returned 200; the URL is valid and will resolve when Max clicks it. The fonts.googleapis.com and fonts.gstatic.com entries are `<link rel="preconnect">` hints, not clickable links, and the full CSS URL resolves 200.
+- Offline test: HTML has zero images, zero scripts, one external CSS link (Google Fonts). Native-font fallback stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`) is defined in `--sans`. Page reads cleanly with network off.
+- PDF render: Chrome headless, 6 pages, 675,685 bytes, `%PDF-1.4`, saved over existing `dist/Ironsite_FirstCall_Limbach.pdf`.
+
+### Judgement calls logged
+
+- LinkedIn DM: "add after the first sentence" interpreted literally — reframing line placed directly after "Nick, congrats on the national role." It reads a touch abrupt because "the week one readout" is named before the main readout sentence, but this is the literal reading of the instruction and keeps the disclaimer up front.
+- Kept Section 1 italic line visually subtle (italic, `--ink-3` grey, 14.5px) to read as a bridge, not a pull-quote. Did not add a decorative rule or shading.
+- `outreach/next_three_accounts.md` kept to one page (three entries, short rationale each, named buyer each, rejected candidates noted). No briefings.
