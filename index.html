@@ -130,6 +130,12 @@
   .flags .dot.red{background:var(--flag)}
   .flags .dot.amber{background:var(--ink);border:1px solid var(--ink);outline:1px solid var(--ink-4);outline-offset:-3px}
 
+  .roi{border:1px solid var(--ink);padding:12px 14px;margin:16px 0 4px;background:var(--bg)}
+  .roi label{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-3);display:block;margin-bottom:6px;font-weight:500}
+  .roi label output{color:var(--ink);font-weight:600;margin-left:6px}
+  .roi input[type=range]{width:100%;max-width:420px;margin:2px 0 10px;accent-color:var(--ink)}
+  .roi .roi-out{font-size:13.5px;color:var(--ink-2);margin:4px 0 2px}
+  .roi .roi-out output{font-family:var(--mono);color:var(--ink);font-weight:600}
   .super{border:1px dashed var(--ink-4);padding:14px 16px;background:var(--bg-soft);margin-top:16px}
   .super h4{margin:0 0 8px;font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink)}
   .super ul{padding-left:18px;margin:0}
@@ -339,7 +345,7 @@
     <div class="mock-wrap">
       <div class="mock-head">
         <div class="t">IRONSITE // CREW WEEK 01</div>
-        <div class="r">IND-MECH · Healthcare central plant · Indianapolis, IN · Mon-Fri</div>
+        <div class="r">IND-MECH · Healthcare central plant · Midwest · Mon-Fri</div>
       </div>
       <div class="mock-body">
 
@@ -350,11 +356,11 @@
               <tr><th>Worker</th><th>Role</th><th>Local</th><th class="num">Shifts</th><th class="num">Billed hrs</th><th class="num">Obs. install %</th></tr>
             </thead>
             <tbody>
-              <tr><td>D. Reyes</td><td>Foreman</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">50.0</td><td class="num">18%</td></tr>
-              <tr><td>T. Novak</td><td>Journeyman Pipefitter</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">50.0</td><td class="num">31%</td></tr>
-              <tr><td>M. Kowalski</td><td>Journeyman Pipefitter</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">48.5</td><td class="num">29%</td></tr>
-              <tr><td>A. Okafor</td><td>Welder</td><td class="dim">UA 440</td><td class="num">4</td><td class="num">40.0</td><td class="num">34%</td></tr>
-              <tr><td>J. Bellamy</td><td>Apprentice Pipefitter</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">50.0</td><td class="num">22%</td></tr>
+              <tr><td>D. Reyes</td><td>Foreman</td><td class="dim">UA Local (Midwest)</td><td class="num">5</td><td class="num">50.0</td><td class="num">18%</td></tr>
+              <tr><td>T. Novak</td><td>Journeyman Pipefitter</td><td class="dim">UA Local (Midwest)</td><td class="num">5</td><td class="num">50.0</td><td class="num">31%</td></tr>
+              <tr><td>M. Kowalski</td><td>Journeyman Pipefitter</td><td class="dim">UA Local (Midwest)</td><td class="num">5</td><td class="num">48.5</td><td class="num">29%</td></tr>
+              <tr><td>A. Okafor</td><td>Welder</td><td class="dim">UA Local (Midwest)</td><td class="num">4</td><td class="num">40.0</td><td class="num">34%</td></tr>
+              <tr><td>J. Bellamy</td><td>Apprentice Pipefitter</td><td class="dim">UA Local (Midwest)</td><td class="num">5</td><td class="num">50.0</td><td class="num">22%</td></tr>
               <tr><td>R. Ortiz</td><td>Helper</td><td class="dim">Non-UA</td><td class="num">5</td><td class="num">45.0</td><td class="num">19%</td></tr>
             </tbody>
           </table>
@@ -438,6 +444,21 @@
           <div>Thu 15:10</div><div><span class="dot red"></span>Hot work</div><div>Fire watch left position 6 min before burn-cool timer expired.</div>
         </div>
 
+        <div class="mock-sub">Illustrative ROI · install share &rarr; T&amp;M recovery</div>
+        <div class="roi">
+          <label for="roi-slider">
+            Target install share (week 01 baseline: 28%)
+            <output id="roi-val">33%</output>
+          </label>
+          <input id="roi-slider" type="range" min="25" max="40" value="33" step="1">
+          <p class="roi-out">
+            At a <output id="roi-gain">5</output>-point gain on a $170M annual T&amp;M run-rate, recovery is roughly <output id="roi-dollars">$8.5M</output>/yr of billable time currently sitting in prep, wait, and rework.
+          </p>
+          <p class="footnote">
+            Math: (target &minus; 28) &times; 0.01 &times; $170M. $170M is the midpoint of the FY25 T&amp;M run-rate derived in Section 2.
+          </p>
+        </div>
+
         <div class="super">
           <h4>What a super could do with this week one</h4>
           <ul>
@@ -457,7 +478,7 @@
 
     <div class="obj">
       <div class="q"><span class="num">01</span>"Our craft is majority UA and IBEW. Worker-mounted cameras are a bargaining-unit fight we're not looking to pick."</div>
-      <div class="a">Fair, and worth naming on the first call. The clean path is a pilot on a single crew with the local's rep in the room, footage retained by Limbach, and written scope limits on use (T&amp;M substantiation, safety review, no performance discipline). Most recent wearable-camera pilots at union mechanical contractors have landed on that kind of written MOU. Ask UA 440 before any rollout, not after. Worth saying plainly: a merit shop or employee-owned contractor is a cleaner first logo for the product. Limbach is the harder pilot and the right one if the MOU path works.</div>
+      <div class="a">Fair, and worth naming on the first call. The clean path is a pilot on a single crew with the local's rep in the room, footage retained by Limbach, and written scope limits on use (T&amp;M substantiation, safety review, no performance discipline). Most recent wearable-camera pilots at union mechanical contractors have landed on that kind of written MOU. Ask UA Local (Midwest) before any rollout, not after. Worth saying plainly: a merit shop or employee-owned contractor is a cleaner first logo for the product. Limbach is the harder pilot and the right one if the MOU path works.</div>
     </div>
 
     <div class="obj">
@@ -495,18 +516,33 @@ I put together a first-week Ironsite readout for one industrial mechanical crew 
     </div>
   </section>
 
-  <!-- 7. FOOTER -->
-  <footer>
-    <h2 class="sec-head">Why I built this</h2>
-    <p>
-      That's the sample. Menemsha summers, cold BD at getcracked.io, live threads with Thalheimer and Weitsman on the scrap side. What you get here is not a dashboard or a deck. It is one page per account, built from public sources, in a voice a field super won't roll their eyes at. Tell me the next name and I'll turn one in by the weekend.
-    </p>
+  <div class="sig-wrap">
     <div class="sig">
       Wyatt Zoia &middot; wyatthenryzoia@gmail.com
     </div>
-  </footer>
+  </div>
 
 </main>
+
+<script>
+(function(){
+  var s=document.getElementById('roi-slider');
+  if(!s)return;
+  var v=document.getElementById('roi-val');
+  var g=document.getElementById('roi-gain');
+  var d=document.getElementById('roi-dollars');
+  function upd(){
+    var t=parseInt(s.value,10);
+    var gain=t-28;
+    v.textContent=t+'%';
+    g.textContent=gain;
+    var dollars=(gain*0.01*170).toFixed(1);
+    var neg=dollars<0;
+    d.textContent=(neg?'-$':'$')+Math.abs(dollars)+'M';
+  }
+  s.addEventListener('input',upd);upd();
+})();
+</script>
 
 </body>
 </html>
