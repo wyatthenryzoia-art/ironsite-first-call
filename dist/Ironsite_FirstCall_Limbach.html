@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ironsite // First Call · Limbach Holdings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --ink-2:#1c1c1c;
+    --ink-3:#3a3a3a;
+    --ink-4:#6b6b6b;
+    --ink-5:#9a9a9a;
+    --rule:#d8d8d8;
+    --rule-2:#eaeaea;
+    --rule-3:#f3f3f3;
+    --bg:#ffffff;
+    --bg-soft:#fafafa;
+    --bg-dark:#0a0a0a;
+    --flag:#a01414;
+    --mono:"Roboto Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--ink-4)}
+  a:hover{text-decoration-color:var(--ink)}
+  code,.mono{font-family:var(--mono)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px}
+
+  header.top{
+    position:sticky;top:0;z-index:10;
+    background:var(--bg);
+    border-bottom:1px solid var(--ink);
+  }
+  header.top .wrap{padding-top:16px;padding-bottom:14px;display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  header.top .brand{font-family:var(--mono);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;color:var(--ink);display:flex;align-items:baseline;gap:10px}
+  header.top .brand .slash{color:var(--ink-4)}
+  header.top h1{font-family:var(--sans);font-size:20px;font-weight:600;margin:0;letter-spacing:-0.01em;color:var(--ink)}
+  header.top h1 .ticker{color:var(--ink-4);font-weight:400;font-size:12px;margin-left:8px;font-family:var(--mono);letter-spacing:0.08em}
+  header.top .sub{color:var(--ink-4);font-size:11.5px;font-family:var(--mono);letter-spacing:0.08em;text-transform:uppercase}
+
+  section{border-bottom:1px solid var(--rule-2);padding:36px 0 40px}
+  section:last-of-type{border-bottom:0}
+  .sec-label{font-family:var(--mono);font-size:10.5px;letter-spacing:0.16em;color:var(--ink-4);text-transform:uppercase;margin-bottom:10px;font-weight:500}
+  .sec-label .n{color:var(--ink);margin-right:8px}
+  .sec-head{font-family:var(--sans);font-size:22px;font-weight:600;margin:0 0 16px;letter-spacing:-0.015em;color:var(--ink)}
+  p{margin:0 0 12px}
+  p.lead{font-size:15.5px;color:var(--ink-2)}
+  ul{margin:0 0 12px;padding-left:20px}
+  li{margin-bottom:6px}
+
+  /* Snapshot facts */
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--rule);margin:12px 0 14px}
+  .facts div{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:10px 12px;background:var(--bg)}
+  .facts .k{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-4);margin-bottom:3px;font-weight:500}
+  .facts .v{font-family:var(--mono);font-size:13.5px;color:var(--ink);font-weight:500}
+  .facts .v small{color:var(--ink-4);font-size:10.5px;font-family:var(--mono);font-weight:400;margin-left:2px}
+
+  /* Signals */
+  .signal{border-left:2px solid var(--ink);padding:2px 0 2px 16px;margin:20px 0}
+  .signal .row{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px}
+  .signal h3{margin:0;font-size:15.5px;font-weight:600;color:var(--ink);font-family:var(--sans);line-height:1.35}
+  .signal .meta{font-family:var(--mono);font-size:11px;color:var(--ink-4);letter-spacing:0.04em}
+  .grade{display:inline-block;padding:1px 7px;font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;vertical-align:1px;font-weight:500}
+  .grade.strong{background:var(--ink);color:#fff}
+  .grade.medium{background:#fff;color:var(--ink);border:1px solid var(--ink)}
+  .grade.weak{background:#fff;color:var(--ink-4);border:1px solid var(--ink-4)}
+  .signal .tie{font-size:14px;color:var(--ink-2);margin-top:6px}
+  .signal .tie .arrow{color:var(--ink);font-family:var(--mono);margin-right:2px}
+
+  /* Buyer */
+  .buyer{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+  .buyer .card{border:1px solid var(--ink);padding:14px 16px;background:var(--bg)}
+  .buyer .card.backup{border-color:var(--ink-4)}
+  .buyer .card h3{margin:0 0 3px;font-size:15px;font-weight:600;letter-spacing:-0.01em}
+  .buyer .card .role{font-family:var(--mono);font-size:11px;color:var(--ink-4);margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase}
+  .buyer .card .tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--ink-3);background:var(--bg-soft);border:1px solid var(--rule);padding:1px 6px;margin-right:3px;margin-bottom:3px;letter-spacing:0.04em;text-transform:uppercase;font-weight:500}
+  .buyer .card p{font-size:13.5px;margin:5px 0;color:var(--ink-2)}
+  .buyer .card p b{color:var(--ink);font-weight:600}
+
+  /* Mock dashboard */
+  .mock-banner{
+    background:#fff;
+    border:1px solid var(--ink);
+    border-left:4px solid var(--ink);
+    padding:12px 14px;
+    margin:6px 0 18px;
+    font-size:13.5px;
+    color:var(--ink-2);
+  }
+  .mock-banner b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;margin-right:8px;display:inline-block;font-weight:600;padding:1px 6px;background:var(--ink);color:#fff}
+  .mock-wrap{border:1px solid var(--ink);background:var(--bg)}
+  .mock-head{display:flex;justify-content:space-between;align-items:baseline;padding:10px 14px;background:var(--bg-dark);color:#f5f5f5;border-bottom:1px solid var(--ink);gap:10px;flex-wrap:wrap}
+  .mock-head .t{font-family:var(--mono);font-size:11.5px;letter-spacing:0.12em;font-weight:500}
+  .mock-head .r{font-family:var(--mono);font-size:10.5px;color:#a8a8a8;letter-spacing:0.04em}
+  .mock-body{padding:14px 16px}
+  .mock-sub{font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-4);margin:16px 0 8px;font-weight:500}
+
+  .t-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table.crew{width:100%;min-width:560px;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
+  table.crew th,table.crew td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule-2);vertical-align:middle}
+  table.crew th{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-4);font-weight:500;background:var(--bg-soft);border-bottom:1px solid var(--rule)}
+  table.crew tr:last-child td{border-bottom:0}
+  table.crew td.num{text-align:right;color:var(--ink)}
+  table.crew td.dim{color:var(--ink-4)}
+
+  /* Greyscale stacked bar */
+  .bar{display:flex;height:14px;border:1px solid var(--ink);background:#fff;overflow:hidden;min-width:180px}
+  .bar span{display:block;height:100%}
+  .b-install{background:var(--ink)}
+  .b-prep{background:#6b6b6b}
+  .b-wait{background:repeating-linear-gradient(45deg,#a0a0a0 0,#a0a0a0 3px,#c8c8c8 3px,#c8c8c8 6px)}
+  .b-coord{background:#c8c8c8}
+  .b-rework{background:repeating-linear-gradient(90deg,#fff 0,#fff 2px,#0a0a0a 2px,#0a0a0a 3px)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin:10px 0 8px;letter-spacing:0.04em;text-transform:uppercase}
+  .legend i{display:inline-block;width:12px;height:10px;margin-right:6px;border:1px solid var(--ink);vertical-align:-1px}
+  .footnote{font-size:11px;color:var(--ink-4);font-family:var(--mono);margin-top:8px;line-height:1.5;letter-spacing:0.02em}
+  .footnote a{color:var(--ink-4);text-decoration-color:var(--ink-5)}
+
+  /* Safety flags */
+  .flags{display:grid;grid-template-columns:130px 140px 1fr;gap:0;border:1px solid var(--ink);font-family:var(--mono);font-size:12px}
+  .flags div{padding:8px 10px;border-bottom:1px solid var(--rule-2)}
+  .flags div.hd{font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-4);background:var(--bg-soft);border-bottom:1px solid var(--rule);font-weight:500}
+  .flags .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+  .flags .dot.red{background:var(--flag)}
+  .flags .dot.amber{background:var(--ink);border:1px solid var(--ink);outline:1px solid var(--ink-4);outline-offset:-3px}
+
+  .super{border:1px dashed var(--ink-4);padding:14px 16px;background:var(--bg-soft);margin-top:16px}
+  .super h4{margin:0 0 8px;font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink)}
+  .super ul{padding-left:18px;margin:0}
+  .super li{font-size:14px;color:var(--ink-2)}
+
+  /* Objections */
+  .obj{border-top:1px solid var(--rule-2);padding:16px 0}
+  .obj:first-of-type{border-top:0;padding-top:4px}
+  .obj .q{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:-0.01em}
+  .obj .q .num{font-family:var(--mono);color:var(--ink-4);font-size:11px;margin-right:10px;font-weight:500;letter-spacing:0.08em}
+  .obj .a{font-size:14px;color:var(--ink-2)}
+
+  /* Outreach */
+  .reach{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .reach .msg{border:1px solid var(--ink);background:var(--bg);display:flex;flex-direction:column}
+  .reach .msg .h{padding:8px 12px;border-bottom:1px solid var(--ink);background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .reach .msg .h .ch{font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;font-weight:500}
+  .reach .msg .h .tag{font-family:var(--mono);font-size:9.5px;color:#c8c8c8;text-transform:uppercase;letter-spacing:0.12em}
+  .reach .msg .b{padding:14px;font-size:13.5px;color:var(--ink-2);white-space:pre-wrap;font-family:var(--sans);flex:1;line-height:1.55}
+  .reach .msg .b .sub{font-family:var(--mono);font-size:11px;color:var(--ink-4);margin-bottom:8px;display:block;letter-spacing:0.04em;text-transform:uppercase;font-weight:500}
+  .reach .msg .f{padding:7px 12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10px;color:var(--ink-4);text-align:right;letter-spacing:0.08em;text-transform:uppercase;background:var(--bg-soft)}
+
+  footer{padding:36px 0 80px}
+  footer p{font-size:14px;color:var(--ink-2);max-width:640px;line-height:1.65}
+  footer .sig{margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--ink-4);border-top:1px solid var(--ink);padding-top:12px;letter-spacing:0.06em}
+
+  /* Print */
+  @media print{
+    :root{--bg:#fff}
+    body{font-size:11.5px}
+    header.top{position:static;border-bottom:1px solid #000}
+    section{page-break-inside:avoid;padding:18px 0 20px}
+    .mock-head{background:#000 !important;color:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .bar span,.mock-banner b,.reach .msg .h{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    a{color:#000}
+    .wrap{max-width:none;padding:0 24px}
+    header.top h1{font-size:17px}
+    .sec-head{font-size:16px}
+    .t-wrap{overflow:visible}
+    table.crew{min-width:0;font-size:10.5px}
+  }
+
+  /* Tablet */
+  @media (max-width:820px){
+    .facts{grid-template-columns:repeat(3,1fr)}
+  }
+
+  /* Phone */
+  @media (max-width:640px){
+    body{font-size:14.5px}
+    .wrap{padding:0 18px}
+    header.top .wrap{padding-top:12px;padding-bottom:10px}
+    header.top h1{font-size:17px;flex-basis:100%}
+    header.top .sub{font-size:10.5px}
+    header.top .brand{flex-basis:100%;font-size:11px}
+    section{padding:26px 0 28px}
+    .sec-head{font-size:18px}
+    .facts{grid-template-columns:repeat(2,1fr)}
+    .facts div{padding:9px 10px}
+    .facts .v{font-size:12.5px}
+    .buyer{grid-template-columns:1fr}
+    .reach{grid-template-columns:1fr}
+    .flags{grid-template-columns:90px 90px 1fr;font-size:11px}
+    .flags div{padding:6px 7px}
+    .mock-head{padding:8px 12px}
+    .mock-head .t{font-size:10.5px}
+    .mock-head .r{font-size:9.5px}
+    .mock-body{padding:12px}
+    table.crew{min-width:520px}
+    .legend{gap:10px;font-size:9.5px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">IRONSITE <span class="slash">//</span> FIRST CALL</div>
+    <h1>Limbach Holdings<span class="ticker">NASDAQ · LMB</span></h1>
+    <div class="sub">Prepared by Wyatt · 2026.04</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 1. SNAPSHOT -->
+  <section id="snapshot">
+    <div class="sec-label"><span class="n">01</span>Snapshot</div>
+    <h2 class="sec-head">Who Limbach is</h2>
+    <p class="lead">
+      Public mechanical contractor, founded 1901, HQ Warrendale, PA. FY2024 revenue <span class="mono">$518.8M</span>, FY2025 guidance <span class="mono">$650-680M</span>, <span class="mono">~1,400</span> team members across <span class="mono">20</span> offices in the eastern US. Six verticals: healthcare, industrial and manufacturing, data centers, life science, higher education, cultural and entertainment. Majority of craft workforce is under collective bargaining. Business is shifting fast toward Owner Direct Relationships (ODR), which hit <span class="mono">76.6%</span> of Q3 2025 revenue.
+    </p>
+
+    <div class="facts">
+      <div><div class="k">Revenue FY24</div><div class="v">$518.8M <small>+0.5% YoY</small></div></div>
+      <div><div class="k">Revenue FY25e</div><div class="v">$650-680M</div></div>
+      <div><div class="k">Adj EBITDA FY24</div><div class="v">$63.7M <small>+36.1%</small></div></div>
+      <div><div class="k">Gross margin FY24</div><div class="v">27.8%</div></div>
+      <div><div class="k">Team</div><div class="v">~1,400</div></div>
+      <div><div class="k">Offices</div><div class="v">20 · Eastern US</div></div>
+      <div><div class="k">HQ</div><div class="v">Warrendale, PA</div></div>
+      <div><div class="k">Founded</div><div class="v">1901</div></div>
+      <div><div class="k">Ownership</div><div class="v">Public · LMB</div></div>
+      <div><div class="k">ODR · Q3'25</div><div class="v">76.6%</div></div>
+      <div><div class="k">Craft</div><div class="v">Union majority</div></div>
+      <div><div class="k">Verticals</div><div class="v">6 · MEP owner-direct</div></div>
+    </div>
+
+    <p>
+      Notable recent moves: acquired Pioneer Power (industrial mechanical, Upper Midwest) for <span class="mono">$66.1M</span> on <span class="mono">Jul 1, 2025</span>, adding <span class="mono">~$120M</span> annualized revenue from 2026. Consolidated Mechanical (KY/MI/IL) was added in 2024 for <span class="mono">$23M</span>. ACME Industrial Piping and Industrial Air were acquired earlier in 2024. A national healthcare owner engagement across 20 locations produced <span class="mono">$12M</span> in capital projects at four sites in Q3 2025.
+    </p>
+    <p class="footnote">
+      Sources:
+      <a href="https://www.limbachinc.com/news-events/press-releases/limbach-holdings-inc-reports-fourth-quarter-and-full-year-2024-results/">FY2024 results (Mar 10, 2025)</a> ·
+      <a href="https://www.fool.com/earnings/call-transcripts/2025/11/27/limbach-lmb-q3-2025-earnings-call-transcript/">Q3 2025 transcript</a> ·
+      <a href="https://www.businesswire.com/news/home/20250701595283/en/Limbach-Acquires-Pioneer-Power">Pioneer Power acquisition</a> ·
+      <a href="https://www.sec.gov/Archives/edgar/data/1606163/000162828025011745/lmb-20241231.htm">FY2024 10-K</a>
+    </p>
+  </section>
+
+  <!-- 2. SIGNALS -->
+  <section id="signals">
+    <div class="sec-label"><span class="n">02</span>Why now, three signals</div>
+    <h2 class="sec-head">Three public signals from the last 12 months</h2>
+
+    <div class="signal">
+      <div class="row">
+        <h3>Q3 2025 call: gross margin guide cut to 25.5-26.5%, T&amp;M is ~1/3 of ODR.</h3>
+      </div>
+      <div class="meta">
+        Nov 27, 2025 ·
+        <a href="https://www.fool.com/earnings/call-transcripts/2025/11/27/limbach-lmb-q3-2025-earnings-call-transcript/">Q3 2025 earnings call transcript</a>
+        · <span class="grade strong">Strong</span>
+      </div>
+      <div class="tie">
+        <span class="arrow">&rarr;</span> Camera-on-helmet footage ties billed T&amp;M hours to observed install activity. On a $180-200M annual T&amp;M run-rate, even a 50 bps billing-accuracy gain is real money. Defends gross margin in the fastest-growing segment.
+      </div>
+    </div>
+
+    <div class="signal">
+      <div class="row">
+        <h3>Pioneer Power closes: four industrial mechanical acquisitions in 18 months.</h3>
+      </div>
+      <div class="meta">
+        Jul 1, 2025 ·
+        <a href="https://www.businesswire.com/news/home/20250701595283/en/Limbach-Acquires-Pioneer-Power">Acquisition press release</a>
+        · <span class="grade strong">Strong</span>
+      </div>
+      <div class="tie">
+        <span class="arrow">&rarr;</span> Four field-ops cultures, four tool stacks, different craft locals. Per-worker productivity data is the fastest way to normalize output across the acquired companies without a multi-year ERP lift. Wearable rollout is days, not quarters.
+      </div>
+    </div>
+
+    <div class="signal">
+      <div class="row">
+        <h3>Nick Angerosa promoted to EVP National Customer Solutions (from Pres, Southeast).</h3>
+      </div>
+      <div class="meta">
+        Jan 13, 2026 ·
+        <a href="https://www.stocktitan.net/news/LMB/limbach-strengthens-national-growth-strategy-with-executive-m2rz1oz6fsge.html">Limbach press release</a>
+        · <span class="grade strong">Strong</span>
+      </div>
+      <div class="tie">
+        <span class="arrow">&rarr;</span> Fresh EVP, ops background, national charter, stated focus on data center and industrial growth. The announcement itself names "tools, data, and insights" as the equipping mandate. Short political window to place a category bet.
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BUYER -->
+  <section id="buyer">
+    <div class="sec-label"><span class="n">03</span>The buyer</div>
+    <h2 class="sec-head">Who to call, and why them</h2>
+
+    <div class="buyer">
+      <div class="card">
+        <h3>Nick Angerosa</h3>
+        <div class="role">EVP, National Customer Solutions · Limbach</div>
+        <p><span class="tag">Primary</span><span class="tag">13 yrs at Limbach</span><span class="tag">Ex-Pres, SE Region</span></p>
+        <p>Appointed to the new national role on <b>Jan 13, 2026</b>. Came up through regional operations, not sales. His public charter integrates operational insight across national customer accounts, with an explicit tilt to data centers and industrial.</p>
+        <p><b>Route in:</b> LinkedIn note referencing the appointment plus one line on what Ironsite's first-week output would look like for a Pioneer Power or CMI crew. 15 minutes, one crew, one scope.</p>
+        <p class="footnote">
+          LinkedIn: search "Nick Angerosa Limbach" &middot;
+          <a href="https://www.stocktitan.net/news/LMB/limbach-strengthens-national-growth-strategy-with-executive-m2rz1oz6fsge.html">Appointment release</a>
+        </p>
+      </div>
+      <div class="card backup">
+        <h3>Jayme Brooks</h3>
+        <div class="role">EVP &amp; CFO · Limbach</div>
+        <p><span class="tag">Backup</span><span class="tag">Margin defense angle</span></p>
+        <p>Q3 2025 guidance cut gross margin from 28-29% to 25.5-26.5%. Per-worker productivity data is a margin-defense tool that a CFO can expense against FY26 EBITDA targets.</p>
+        <p class="footnote">
+          <a href="https://www.limbachinc.com/about-us/company-leadership/">Limbach leadership page</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. MOCK -->
+  <section id="mock">
+    <div class="sec-label"><span class="n">04</span>Mocked first-week output</div>
+    <h2 class="sec-head">What Ironsite's dashboard would show after week one</h2>
+
+    <div class="mock-banner">
+      <b>Illustrative</b>
+      All names, dates, and specific numbers in this section are mock data. This is a static picture of what Ironsite's output would look like for a crew of this size and trade, built from published field-productivity research. Percentage ranges used below are cited in the footnote at the end of the section.
+    </div>
+
+    <div class="mock-wrap">
+      <div class="mock-head">
+        <div class="t">IRONSITE // CREW WEEK 01</div>
+        <div class="r">IND-MECH · Healthcare central plant · Indianapolis, IN · Mon-Fri</div>
+      </div>
+      <div class="mock-body">
+
+        <div class="mock-sub">Crew roster · illustrative</div>
+        <div class="t-wrap">
+          <table class="crew">
+            <thead>
+              <tr><th>Worker</th><th>Role</th><th>Local</th><th class="num">Shifts</th><th class="num">Billed hrs</th><th class="num">Obs. install %</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>D. Reyes</td><td>Foreman</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">50.0</td><td class="num">18%</td></tr>
+              <tr><td>T. Novak</td><td>Journeyman Pipefitter</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">50.0</td><td class="num">31%</td></tr>
+              <tr><td>M. Kowalski</td><td>Journeyman Pipefitter</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">48.5</td><td class="num">29%</td></tr>
+              <tr><td>A. Okafor</td><td>Welder</td><td class="dim">UA 440</td><td class="num">4</td><td class="num">40.0</td><td class="num">34%</td></tr>
+              <tr><td>J. Bellamy</td><td>Apprentice Pipefitter</td><td class="dim">UA 440</td><td class="num">5</td><td class="num">50.0</td><td class="num">22%</td></tr>
+              <tr><td>R. Ortiz</td><td>Helper</td><td class="dim">Non-UA</td><td class="num">5</td><td class="num">45.0</td><td class="num">19%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mock-sub">Crew time breakdown · week 01</div>
+        <div class="t-wrap">
+          <table class="crew" style="margin-bottom:4px">
+            <thead>
+              <tr><th style="width:130px">Worker</th><th>Install &rarr; Prep &rarr; Wait &rarr; Coord &rarr; Rework</th><th class="num" style="width:80px">Billed hrs</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>D. Reyes</td>
+                <td><div class="bar"><span class="b-install" style="width:18%"></span><span class="b-prep" style="width:30%"></span><span class="b-wait" style="width:10%"></span><span class="b-coord" style="width:36%"></span><span class="b-rework" style="width:6%"></span></div></td>
+                <td class="num">50.0</td>
+              </tr>
+              <tr>
+                <td>T. Novak</td>
+                <td><div class="bar"><span class="b-install" style="width:31%"></span><span class="b-prep" style="width:38%"></span><span class="b-wait" style="width:14%"></span><span class="b-coord" style="width:10%"></span><span class="b-rework" style="width:7%"></span></div></td>
+                <td class="num">50.0</td>
+              </tr>
+              <tr>
+                <td>M. Kowalski</td>
+                <td><div class="bar"><span class="b-install" style="width:29%"></span><span class="b-prep" style="width:36%"></span><span class="b-wait" style="width:18%"></span><span class="b-coord" style="width:11%"></span><span class="b-rework" style="width:6%"></span></div></td>
+                <td class="num">48.5</td>
+              </tr>
+              <tr>
+                <td>A. Okafor</td>
+                <td><div class="bar"><span class="b-install" style="width:34%"></span><span class="b-prep" style="width:40%"></span><span class="b-wait" style="width:12%"></span><span class="b-coord" style="width:8%"></span><span class="b-rework" style="width:6%"></span></div></td>
+                <td class="num">40.0</td>
+              </tr>
+              <tr>
+                <td>J. Bellamy</td>
+                <td><div class="bar"><span class="b-install" style="width:22%"></span><span class="b-prep" style="width:44%"></span><span class="b-wait" style="width:16%"></span><span class="b-coord" style="width:10%"></span><span class="b-rework" style="width:8%"></span></div></td>
+                <td class="num">50.0</td>
+              </tr>
+              <tr>
+                <td>R. Ortiz</td>
+                <td><div class="bar"><span class="b-install" style="width:19%"></span><span class="b-prep" style="width:46%"></span><span class="b-wait" style="width:22%"></span><span class="b-coord" style="width:8%"></span><span class="b-rework" style="width:5%"></span></div></td>
+                <td class="num">45.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="legend">
+          <span><i style="background:#0a0a0a"></i>Install</span>
+          <span><i style="background:#6b6b6b"></i>Prep &amp; stage</span>
+          <span><i style="background:repeating-linear-gradient(45deg,#a0a0a0 0,#a0a0a0 3px,#c8c8c8 3px,#c8c8c8 6px)"></i>Wait</span>
+          <span><i style="background:#c8c8c8"></i>Coord</span>
+          <span><i style="background:repeating-linear-gradient(90deg,#fff 0,#fff 2px,#0a0a0a 2px,#0a0a0a 3px)"></i>Rework</span>
+        </div>
+        <p class="footnote">
+          Ranges used: install <span class="mono">25-35%</span>, prep/stage <span class="mono">35-45%</span>, wait/coord <span class="mono">10-20%</span> combined, rework <span class="mono">5-10%</span>. Anchored to
+          <a href="https://www.mckinsey.com/capabilities/operations/our-insights/reinventing-construction-through-a-productivity-revolution">McKinsey MGI, Reinventing Construction (2017)</a>
+          and FMI rework research. The mock shows ~28% average install, ~39% prep, ~15% wait, ~14% coord, ~6% rework.
+        </p>
+
+        <div class="mock-sub">T&amp;M substantiation · scope hours observed vs. billed</div>
+        <div class="t-wrap">
+          <table class="crew">
+            <thead>
+              <tr><th>Scope</th><th class="num">Billed</th><th class="num">Obs. install</th><th class="num">Obs. prep</th><th class="num">Delta</th><th>Flag</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Chilled water pipe (2nd-flr header)</td><td class="num">88.0</td><td class="num">27.5</td><td class="num">46.0</td><td class="num">+14.5 stage-heavy</td><td><span class="dot amber"></span>Review</td></tr>
+              <tr><td>VRF riser weld-ups</td><td class="num">56.0</td><td class="num">20.5</td><td class="num">20.0</td><td class="num">+15.5 wait/coord</td><td><span class="dot amber"></span>Review</td></tr>
+              <tr><td>Isolation valve install</td><td class="num">24.0</td><td class="num">8.0</td><td class="num">10.5</td><td class="num">+5.5 rework</td><td><span class="dot red"></span>Dispute risk</td></tr>
+              <tr><td>Mechanical room GC cleanup</td><td class="num">12.0</td><td class="num">4.0</td><td class="num">7.5</td><td class="num">~aligned</td><td>OK</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mock-sub">Safety flags · week 01</div>
+        <div class="flags">
+          <div class="hd">Day / Time</div><div class="hd">Type</div><div class="hd">What Ironsite saw</div>
+          <div>Mon 09:14</div><div><span class="dot red"></span>PPE</div><div>Helper (R. Ortiz) &lt;6 ft from active welding without screen; flash-risk event logged.</div>
+          <div>Tue 13:48</div><div><span class="dot amber"></span>Lift</div><div>Scissor lift extended with a 3rd worker on deck; exceeds manufacturer capacity for this model.</div>
+          <div>Wed 10:22</div><div><span class="dot amber"></span>Proximity</div><div>Pipefitter within swing radius of unattended overhead load during rigging.</div>
+          <div>Thu 15:10</div><div><span class="dot red"></span>Hot work</div><div>Fire watch left position 6 min before burn-cool timer expired.</div>
+        </div>
+
+        <div class="super">
+          <h4>What a super would do next week</h4>
+          <ul>
+            <li>Pull Tue 13:48 clip for toolbox talk; retrain on scissor-lift ratings with the whole crew.</li>
+            <li>On the VRF riser scope, pre-stage weld-up components Sunday night so Tue/Wed aren't front-loaded with prep. Target install share back above 30%.</li>
+            <li>Have Reyes walk the isolation-valve rework with apprentice Bellamy before submitting that line on the next T&amp;M ticket; either pull hours back or document cause of rework.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. OBJECTIONS -->
+  <section id="objections">
+    <div class="sec-label"><span class="n">05</span>Objections</div>
+    <h2 class="sec-head">What Angerosa will push back on, and the honest answer</h2>
+
+    <div class="obj">
+      <div class="q"><span class="num">01</span>"Our craft is majority UA and IBEW. Worker-mounted cameras are a bargaining-unit fight we're not looking to pick."</div>
+      <div class="a">Fair, and worth naming on the first call. The clean path is a pilot on a single crew with the local's rep in the room, footage retained by Limbach, and written scope limits on use (T&amp;M substantiation, safety review, no performance discipline). Most recent wearable-camera pilots at union mechanical contractors have landed on that kind of written MOU. Worth asking UA 440 before any rollout, not after.</div>
+    </div>
+
+    <div class="obj">
+      <div class="q"><span class="num">02</span>"Pioneer Power and CMI already run their own foreman tracking and we just bolted Procore and safety cameras onto the eastern offices. What does wearable add that we don't have?"</div>
+      <div class="a">Procore captures what was planned and logged. Fixed safety cameras cover fixed locations. Neither gives you per-worker install time on a cost-plus scope, and neither produces a clip you can send a healthcare owner in an hour when a T&amp;M ticket gets disputed. Wearable is specifically for the field labor gap between the plan and the invoice.</div>
+    </div>
+
+    <div class="obj">
+      <div class="q"><span class="num">03</span>"We cut gross margin guidance this quarter because of mix and acquisition integration, not field productivity. Adding a hardware line item doesn't help in 2026."</div>
+      <div class="a">Acquired companies is exactly where the ROI shows up. On a single Pioneer Power crew, moving install share from a week-01 baseline of ~28% to 33% on T&amp;M scopes is worth more than the hardware cost for the year. The pilot is small. The downside is a refund and 90 days of dashboards. The upside is a normalized per-worker baseline across four acquisitions.</div>
+    </div>
+  </section>
+
+  <!-- 6. OUTREACH -->
+  <section id="outreach">
+    <div class="sec-label"><span class="n">06</span>First touch</div>
+    <h2 class="sec-head">Two drafts for the first message to Angerosa</h2>
+
+    <div class="reach">
+      <div class="msg">
+        <div class="h"><span class="ch">LinkedIn DM</span><span class="tag">Draft · not sent</span></div>
+        <div class="b">Nick, congrats on the national role. Saw the Jan 13 release and that the Q3 call flagged ~1/3 of ODR sits in T&amp;M. I put together a sample first-week Ironsite readout for one industrial mechanical crew at a healthcare plant. 15 minutes to walk through it? Happy to send the link either way.</div>
+        <div class="f">62 words</div>
+      </div>
+      <div class="msg">
+        <div class="h"><span class="ch">Email</span><span class="tag">Draft · not sent</span></div>
+        <div class="b"><span class="sub">Subject · T&amp;M substantiation for Pioneer Power and CMI crews</span>Nick,
+
+Your Q3 call put T&amp;M work at about a third of ODR. Limbach has a margin-defense story to write there, and the Pioneer Power and CMI integrations are the fastest place to produce a normalized per-worker baseline.
+
+I put together a first-week Ironsite readout for one industrial mechanical crew as a sample of what that looks like. Static, no commitment.
+
+15 minutes the week of May 5 to walk through it?</div>
+        <div class="f">88 words</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FOOTER -->
+  <footer>
+    <div class="sec-label"><span class="n">07</span>Why I built this</div>
+    <p>
+      Max, the argument for hiring me is that I will do this every week for whichever account is next. I grew up on Menemsha Harbor working scrap metal summers for a small industrial recycler, and I run cold BD at getcracked.io now. I have active threads open with Thalheimer and Weitsman on the scrap side. What you get here is not a dashboard or a deck. It is one page per account, built from public sources, in a voice a field super won't roll their eyes at. This is the sample. Tell me the next name and I'll turn another one in four hours.
+    </p>
+    <div class="sig">
+      Wyatt [lastname] · [email] · [LinkedIn URL]
+    </div>
+  </footer>
+
+</main>
+
+</body>
+</html>
